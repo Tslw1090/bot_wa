@@ -3,7 +3,7 @@ import makeWASocket, { useMultiFileAuthState } from '@whiskeysockets/baileys';
 import path from 'path';
 import { tmpdir } from 'os';
 
-const SESSION_DIRECTORY_NAME = 'baileys_sessions';
+const SESSION_DIRECTORY_NAME = path.join(tmpdir(), 'baileys_sessions');
 
 class BaileysClass {
   constructor(authState) {
@@ -11,7 +11,7 @@ class BaileysClass {
   }
 
   async initBailey(authState) {
-    const sessionsPath = path.resolve(SESSION_DIRECTORY_NAME);
+    const sessionsPath = SESSION_DIRECTORY_NAME;
 
     try {
       if (!existsSync(sessionsPath)) {
