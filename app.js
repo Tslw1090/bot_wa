@@ -67,6 +67,10 @@ app.get('/status', (req, res) => {
   res.send(`<h1>Status: ${status}</h1>${qrCodeSvg}`);
 });
 
+app.get('/test', (req, res) => {
+  res.json({ message: 'Server is running' });
+});
+
 app.post('/send', async (req, res) => {
   const { receiver, message } = req.body;
   if (!receiver || !message || !message.text) {
