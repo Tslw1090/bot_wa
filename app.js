@@ -4,10 +4,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-// Create an instance of BaileysClass
 const botBaileys = new BaileysClass(null);
-
 const app = express();
+
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -64,7 +63,12 @@ botBaileys.on('ready', async () => {
 });
 
 app.get('/status', (req, res) => {
-  res.send(`<h1>Status: ${status}</h1>${qrCodeSvg}`);
+  try {
+    res.status(200).send(`<h1>Status: ${status}</h1>${qrCodeSvg}`);
+  } catch (error) {
+    console.error('Error in /status route:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 app.get('/test', (req, res) => {
