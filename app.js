@@ -4,7 +4,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-const botBaileys = new BaileysClass(null);
+const botBaileys = new BaileysClass();
 const app = express();
 
 app.use(bodyParser.json());
