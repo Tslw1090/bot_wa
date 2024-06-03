@@ -6,11 +6,11 @@ import { tmpdir } from 'os';
 const SESSION_DIRECTORY_NAME = path.join(tmpdir(), 'baileys_sessions');
 
 class BaileysClass {
-  constructor(authState) {
-    this.initBailey(authState);
+  constructor() {
+    this.initPromise = this.initBailey();
   }
 
-  async initBailey(authState) {
+  async initBailey() {
     const sessionsPath = SESSION_DIRECTORY_NAME;
 
     try {
@@ -27,19 +27,23 @@ class BaileysClass {
     this.socket.ev.on('creds.update', saveCreds);
   }
 
-  on(event, handler) {
+  async on(event, handler) {
+    await this.initPromise;
     this.socket.ev.on(event, handler);
   }
 
   async sendMessage(jid, message) {
+    await this.initPromise;
     await this.socket.sendMessage(jid, { text: message });
   }
 
   async readMessages(keys) {
+    await this.initPromise;
     await this.socket.readMessages(keys);
   }
 
   async sendPresenceUpdate(jid, type) {
+    await this.initPromise;
     await this.socket.sendPresenceUpdate(type, jid);
   }
 }
